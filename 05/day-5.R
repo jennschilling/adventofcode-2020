@@ -108,8 +108,7 @@ input_calc_2 <- input_calc %>%
   arrange(seat_id) %>%
   mutate(lag = lag(seat_id),
          check = lag + 1 == seat_id) %>%
-  filter(check == FALSE) %>%
-  select(seat_id)
+  filter(check == FALSE)
 
 print(input_calc_2$seat_id - 1) # Answer
   
