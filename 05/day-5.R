@@ -105,10 +105,11 @@ print(max(input_calc$seat_id)) # Answer
 # Search through the list and find the ID that is missing
 
 input_calc_2 <- input_calc %>% 
-  arrange(seat_id) %>%
-  mutate(lag = lag(seat_id),
-         check = lag + 1 == seat_id) %>%
-  filter(check == FALSE)
+  arrange(seat_id) %>% # sort by seat id
+  mutate(lag = lag(seat_id), # get previous row seat id
+         check = lag + 1 == seat_id) %>% # check that seat id matches prev + 1
+  filter(check == FALSE) # get row where it does not match
 
+# My seat id is the non-matching one - 1
 print(input_calc_2$seat_id - 1) # Answer
   
