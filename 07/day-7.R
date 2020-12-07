@@ -13,7 +13,7 @@ input <- read_tsv('07/input.txt',
 # Find "shiny gold" in the bag rules 
 rules <- input %>%
   rename(bag_rule = X1) %>%
-  mutate(shiny_gold = str_detect(bag_rule, "shiny gold"))
+  mutate(shiny_gold = str_detect(bag_rule, "shiny gold bags"))
 
 # Pull out matched bags
 shiny_gold <- rules %>% filter(shiny_gold == TRUE)
