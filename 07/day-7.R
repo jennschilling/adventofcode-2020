@@ -71,5 +71,9 @@ nrow(all_shiny_gold)
 
 final_check <- check_bags(rules, all_shiny_gold) # All FALSE
 
-# But 262 is too few when I submit??
+# But 262 is incorrect when I submit??
+
+# Hmmm, maybe it's because there is a shiny gold bag rule 
+
+# Try 261 - nope that's not right either
 
