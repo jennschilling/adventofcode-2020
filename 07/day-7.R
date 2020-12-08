@@ -13,7 +13,7 @@ input <- read_tsv('07/input.txt',
 # Find "shiny gold" in the bag rules 
 rules <- input %>%
   rename(bag_rule = X1) %>%
-  mutate(shiny_gold = str_detect(bag_rule, "shiny gold bags"))
+  mutate(shiny_gold = str_detect(bag_rule, "shiny gold bag"))
 
 # Pull out matched bags
 shiny_gold <- rules %>% filter(shiny_gold == TRUE)
@@ -24,9 +24,10 @@ rules <- rules %>% filter(shiny_gold == FALSE)
 # Now get bags that contain bags that have "shiny gold" in them
 check_bags <- function(rules, shiny_gold){
 
-  # Get the bags that contain "shiny gold"
+  # Get the bags that contain "shiny gold" and remove the plural
   bags <- shiny_gold %>%
-    mutate(outer_bag = word(bag_rule, 1, 3, sep = " "))
+    mutate(outer_bag = word(bag_rule, 1, 3, sep = " "),
+           outer_bag = substr(outer_bag, 1, str_length(outer_bag) - 1))
   
   # Find bags that contain bags with "shiny gold"
   for(i in 1:nrow(bags)){
@@ -67,13 +68,9 @@ while(n != nrow(all_shiny_gold)){
 }
 
 # Get the final number of bags within bags within bags of "shiny gold"
-nrow(all_shiny_gold)
+nrow(all_shiny_gold) - 1 # subtract the rule for "shiny gold bags contain.."
 
-final_check <- check_bags(rules, all_shiny_gold) # All FALSE
+# Part 2 - How many individual bags are required inside your single shiny gold bag?
 
-# But 262 is incorrect when I submit??
 
-# Hmmm, maybe it's because there is a shiny gold bag rule 
-
-# Try 261 - nope that's not right either
 
