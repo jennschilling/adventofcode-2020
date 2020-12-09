@@ -69,11 +69,47 @@ for(s in 26:nrow(input_num)){
 # number in this contiguous range.
 # What is the encryption weakness in your XMAS-encrypted list of numbers?
 
-for(x in 1:(nrow(input)-1)){
+for(x in 1:nrow(input)){
   
-  for(y in 2:nrow(input)){
+  # Get set of numbers
+  numbers <- input_num[x:nrow(input),]
+  
+  # Set row number
+  numbers <- numbers %>%
+    mutate(row_num = row_number())
+  
+  # Compute running sum
+  numbers <- numbers %>%
+    mutate(cum_sum = cumsum(number))
+  
+  # See if target is found
+  numbers <- numbers %>%
+    mutate(found = cum_sum == target)
+  
+  # Check found
+  found_target <- numbers %>%
+    filter(found == TRUE)
+  
+  # Found it
+  if(nrow(found_target) != 0){
     
+    # Get last row number
+    final_row_num <- found_target$row_num[1]
     
+    # Get data that added to target
+    list_numbers <- numbers %>%
+      filter(row_num <= final_row_num)
+    
+    # Find smallest number
+    min_num <- min(list_numbers$number)
+    
+    # Find largest number
+    max_num <- max(list_numbers$number)
+    
+    # Return sum
+    print(min_num + max_num)
+    
+    break
     
   }
   
